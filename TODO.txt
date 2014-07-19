@@ -1,0 +1,23 @@
+-Better Reset Behaviour [DONE]
+	-reorganize into class [DONE]
+-investigate "Star" Mode
+-investigate "Side" Mode
+-Presentation Mode
+-make CRoundedLines::setEndpoint use two float parameters instead of one sf::Vector2f (avoid unnesessary copying)
+
+-optimize CRoundedLine
+
+_______________________________________
+
+19.07.2014
+
+- create git repo
+- proper Random support
+- seperate color generation into class (static mehtods)
+- seperate update functionality into seperate classes (composite pattern)
+- general name refactoring
+- log file + log run time
+
+
+
+- investigate configurable numbers of lines
