@@ -411,10 +411,15 @@
 1347542699 source:h:\sicherung_alte_fp\julius\eigene programme\crazy painter\roundendedline.cpp
 	"RoundendedLine.h"
 
-1405785678 source:f:\eigene programme\crazy painter\crazypainter.cpp
+1405788493 source:f:\eigene programme\crazy painter\crazypainter.cpp
 	"CrazyPainter.hpp"
+	"Utilities.h"
+	"Random.hpp"
+	<iostream>
+	<cmath>
+	<random>
 
-1405786515 f:\eigene programme\crazy painter\crazypainter.hpp
+1405788681 f:\eigene programme\crazy painter\crazypainter.hpp
 	<SFML/System/Clock.hpp>
 	<SFML/Window/Event.hpp>
 	<SFML/Graphics/RenderTexture.hpp>
@@ -423,6 +428,7 @@
 	<SFML/Graphics/Text.hpp>
 	<SFML/Window/Window.hpp>
 	"RoundendedLine.h"
+	"ColorGenerator.hpp"
 
 1405632201 f:\librarys\official sfml\install\include\sfml\system\clock.hpp
 	<SFML/System/Export.hpp>
@@ -643,7 +649,9 @@
 	<SFML/Graphics/VertexArray.hpp>
 	<SFML/System/Vector2.hpp>
 
-1376215533 f:\eigene programme\crazy painter\utilities.h
+1405788100 f:\eigene programme\crazy painter\utilities.h
+	<algorithm>
+	<SFML/System/Vector2.hpp>
 
 1405785881 source:f:\eigene programme\crazy painter\main.cpp
 	<SFML/System.hpp>
@@ -819,4 +827,15 @@
 	<cassert>
 
 1405786365 f:\eigene programme\crazy painter\random.hpp
+
+1405788436 source:f:\eigene programme\crazy painter\colorgenerator.cpp
+	"ColorGenerator.hpp"
+	"Random.hpp"
+	<iostream>
+
+1405788436 f:\eigene programme\crazy painter\colorgenerator.hpp
+	<cmath>
+	<SFML\System\Time.hpp>
+	<SFML\Graphics\Color.hpp>
+	"Utilities.h"
 

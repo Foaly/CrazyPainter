@@ -69,9 +69,6 @@ void CrazyPainter::Init(sf::Vector2u TargetSize)
     m_StartTangent.x = 0.f;
     m_StartTangent.y = 0.f;
     m_EndTangent = m_NextPosition - m_StartPosition; // Catmull-Rom Spline (Faktor = 1)
-
-    // Intialize the color
-    m_fHue = 0.0;
 }
 
 void CrazyPainter::Move(sf::Time FrameTime, sf::Window& window)
@@ -82,18 +79,8 @@ void CrazyPainter::Move(sf::Time FrameTime, sf::Window& window)
         if(m_AutoSwitchingClock.getElapsedTime() >= m_AutoSwitchingDuration)
             changeInterpolationMode(1);
 
-    // Calculate the color
-    m_fHue += 0.25 * m_FrameTime.asSeconds();
-    if(m_fHue > 1.0)
-        m_fHue = 0.0;
-
-    float r = std::abs(3.0 - 6.0 * m_fHue) - 1.0;
-    float g = 2.0 - std::abs(2.0 - 6.0 * m_fHue);
-    float b = 2.0 - std::abs(4.0 - 6.0 * m_fHue);
-
-    m_Color.r = Clamp(r, 0.f, 1.f) * 255.f;
-    m_Color.g = Clamp(g, 0.f, 1.f) * 255.f;
-    m_Color.b = Clamp(b, 0.f, 1.f) * 255.f;
+    // get the new hue shifted color
+    m_Color = m_colorGenerator.generateHueShiftedColor(0.25 * m_FrameTime.asSeconds());
 
     // automatic drawing mode
     if(m_bAutoDrawing)
@@ -208,7 +195,7 @@ void CrazyPainter::Render(sf::RenderTarget& Target)
         m_FrontTarget->draw(m_Lines[i]);
     }
     m_FrontTarget->display();
-    swap(m_FrontTarget, m_BackTarget);
+    std::swap(m_FrontTarget, m_BackTarget);
 
 
 
@@ -298,8 +285,8 @@ void CrazyPainter::changeInterpolationMode(int step)
         }
         else
         {
-//            m_bFade = true;
-//
+            m_bFade = true;
+
 //            std::mt19937 generator(44687321);
 //            std::bernoulli_distribution equalBoolDistribution(0.5);
 //

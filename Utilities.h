@@ -1,22 +1,17 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
-template <typename T> void swap(T& x,T& y)
-{
-     T temp;
-     temp = x;
-     x = y;
-     y = temp;
-}
+#include <algorithm>
+#include <SFML/System/Vector2.hpp>
 
-template <typename T> T Clamp(const T& value, const T& low, const T& high)
+template <typename T> T clamp(const T& value, const T& min, const T& max)
 {
-  return value < low ? low : (value > high ? high : value);
+  return std::max(min, std::min(max, value));
 }
 
 template <typename T> T Linear_Interpolation(T& start, T& end, float& amount)
 {
-    return (end * amount) + (start * (1 - amount));
+    return static_cast<T>((end * amount) + (start * (1 - amount)));
 }
 
 template <typename T> T Smoothstep_x2_Interpolation(T& start, T& end, float& amount)

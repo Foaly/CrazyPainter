@@ -15,6 +15,7 @@
 
 
 #include "RoundendedLine.h"
+#include "ColorGenerator.hpp"
 
 
 namespace Interpolation
@@ -87,7 +88,7 @@ private:
     sf::Vector2f m_EndTangent;
     sf::Time m_TotalTime;
     sf::Clock m_CurrentTime;
-    float m_fHue;
+    ColorGenerator m_colorGenerator;
     sf::Color m_Color;
 };
 
