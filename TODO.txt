@@ -11,7 +11,7 @@ _______________________________________
 
 19.07.2014
 
-- create git repo
+- create git repo [DONE]
 - proper Random support
 - seperate color generation into class (static mehtods)
 - seperate update functionality into seperate classes (composite pattern)
