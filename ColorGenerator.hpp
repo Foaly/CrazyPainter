@@ -1,10 +1,9 @@
 #ifndef COLORGENERATOR_INCLUDE
 #define COLORGENERATOR_INCLUDE
 
-#include <cmath>
 #include <SFML\System\Time.hpp>
 #include <SFML\Graphics\Color.hpp>
-#include "Utilities.h"
+#include "Utilities.hpp"
 
 class ColorGenerator
 {

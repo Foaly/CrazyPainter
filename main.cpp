@@ -1,6 +1,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Err.hpp>
-//#include <SFML/OpenGL.hpp>
+#include <SFML/Window/Context.hpp>
+#include <SFML/OpenGL.hpp>
 #include <iostream>
 #include <fstream>
 #include <chrono>
@@ -30,12 +31,15 @@ int main()
     std::cout << "Programm started at: " << std::ctime(&startTime_t) << std::endl;
 
     // Log some info
-    std::cout << "Maximum Textursize: " << sf::Texture::getMaximumSize() << std::endl;
-//    std::cout << "Grafikkartenhersteller: " << glGetString(GL_VENDOR) << std::endl;
-//    std::cout << "Grafikkartenname: " << glGetString(GL_RENDERER) << std::endl;
-//    std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+    {
+        sf::Context context;
+        std::cout << "Graphicscard vendor: " << glGetString(GL_VENDOR) << std::endl;
+        std::cout << "Graphicscard name: " << glGetString(GL_RENDERER) << std::endl;
+        std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+    }
     std::cout << "Compiled with SFML Version: " << SFML_VERSION_MAJOR  << "." << SFML_VERSION_MINOR << std::endl;
     std::cout << "VideoMode:" << std::endl << "  Width: " << sf::VideoMode::getFullscreenModes()[0].width  << std::endl <<  "  Height: " << sf::VideoMode::getFullscreenModes()[0].height  << std::endl <<  "  Bits per Pixel: " << sf::VideoMode::getFullscreenModes()[0].bitsPerPixel << std::endl;
+    std::cout << "Maximum Textursize: " << sf::Texture::getMaximumSize() << std::endl;
 
     // Set up the window
 #ifdef DEBUG
@@ -46,10 +50,9 @@ int main()
     window.setFramerateLimit(60);
 
     // Create the painter
-    CrazyPainter crazyPainter;
-    crazyPainter.Init(window);
+    CrazyPainter crazyPainter(window);
 
-    // Create some veriables
+    // Create some variables
     sf::Event event;
     sf::Clock frameClock;
 
@@ -68,8 +71,8 @@ int main()
                 // Capture Screenshot
                 if (event.key.code == sf::Keyboard::F1)
                 {
-                    sf::Image Screen = window.capture();
-                    Screen.saveToFile("screenshot.jpg");
+                    sf::Image screenShot = window.capture();
+                    screenShot.saveToFile("screenshot.jpg");
                 }
                 #endif
 
@@ -78,7 +81,7 @@ int main()
                     window.close();
             }
 
-            crazyPainter.HandleEvents(event, window);
+            crazyPainter.handleEvents(event, window);
         }
 
         sf::Time frameTime = frameClock.restart();
@@ -91,7 +94,7 @@ int main()
 
         // Draw to the window
         window.clear();
-        crazyPainter.Render(window);
+        crazyPainter.render(window);
         window.display();
     }
 

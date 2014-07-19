@@ -14,7 +14,7 @@
 #endif
 
 
-#include "RoundendedLine.h"
+#include "RoundendedLine.hpp"
 #include "ColorGenerator.hpp"
 
 
@@ -49,11 +49,11 @@ inline Interpolation::InterpolationType& operator--(Interpolation::Interpolation
 class CrazyPainter
 {
 public:
-    void Init(sf::RenderWindow& window);
-    void Exit();
+    CrazyPainter(sf::RenderWindow& window);
+
     void update(sf::Time FrameTime);
-    void Render(sf::RenderTarget& Target);
-    void HandleEvents(sf::Event& Event, sf::Window& window);
+    void render(sf::RenderTarget& Target);
+    void handleEvents(sf::Event& event, sf::Window& window);
 
 private:
     void ResetLines();

@@ -1,13 +1,8 @@
 #include "CrazyPainter.hpp"
-#include "Utilities.h"
+#include "Utilities.hpp"
 #include "Random.hpp"
 
-#include <iostream>
-#include <cmath>
-#include <random>
-
-
-void CrazyPainter::Init(sf::RenderWindow& window)
+CrazyPainter::CrazyPainter(sf::RenderWindow& window)
 {
     // save a reference to the window, to get mouse input
     m_window = &window;
@@ -62,15 +57,12 @@ void CrazyPainter::Init(sf::RenderWindow& window)
     // Setup variables needed for the interpolation
     m_TotalTime = sf::seconds(1.f);
     m_StartPosition = m_HalfTargetSize;
-    m_EndPosition.x = random(0.f, m_TargetSize.x);
-    m_EndPosition.y = random(0.f, m_TargetSize.y);
+    m_EndPosition = sf::Vector2f(random(0.f, m_TargetSize.x), random(0.f, m_TargetSize.y));
 
 
     // Setup variables needed for the hermite interpolation
-    m_NextPosition.x = random(0.f, m_TargetSize.x);
-    m_NextPosition.y = random(0.f, m_TargetSize.y);
-    m_StartTangent.x = 0.f;
-    m_StartTangent.y = 0.f;
+    m_NextPosition = sf::Vector2f(random(0.f, m_TargetSize.x), random(0.f, m_TargetSize.y));
+    m_StartTangent = sf::Vector2f(0.f, 0.f);
     m_EndTangent = m_NextPosition - m_StartPosition; // Catmull-Rom Spline (Faktor = 1)
 }
 
@@ -182,7 +174,7 @@ void CrazyPainter::update(sf::Time FrameTime)
 
 }
 
-void CrazyPainter::Render(sf::RenderTarget& Target)
+void CrazyPainter::render(sf::RenderTarget& Target)
 {
     // Draw everything to the RenderTexture
     m_FrontTarget->clear(sf::Color::Transparent);
@@ -210,12 +202,12 @@ void CrazyPainter::Render(sf::RenderTarget& Target)
         Target.draw(m_AuthorName);
 }
 
-void CrazyPainter::HandleEvents(sf::Event& Event, sf::Window& window)
+void CrazyPainter::handleEvents(sf::Event& event, sf::Window& window)
 {
     // Key Events
-    if(Event.type == sf::Event::KeyPressed)
+    if(event.type == sf::Event::KeyPressed)
     {
-        switch(Event.key.code)
+        switch(event.key.code)
         {
         case sf::Keyboard::C:
             // Clear RenderTexture
@@ -266,7 +258,7 @@ void CrazyPainter::HandleEvents(sf::Event& Event, sf::Window& window)
         }
     }
     // Reset on MouseRelease
-    else if ((Event.type == sf::Event::MouseButtonReleased) && (Event.mouseButton.button == sf::Mouse::Left) && !m_bAutoDrawing)
+    else if ((event.type == sf::Event::MouseButtonReleased) && (event.mouseButton.button == sf::Mouse::Left) && !m_bAutoDrawing)
         ResetLines();
 }
 
