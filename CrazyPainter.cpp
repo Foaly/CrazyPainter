@@ -7,10 +7,13 @@
 #include <random>
 
 
-void CrazyPainter::Init(sf::Vector2u TargetSize)
+void CrazyPainter::Init(sf::RenderWindow& window)
 {
+    // save a reference to the window, to get mouse input
+    m_window = &window;
+
     // Get the Targets size
-    m_TargetSize = sf::Vector2f(TargetSize);
+    m_TargetSize = sf::Vector2f(m_window->getSize());
 
     // Create Rendertextures
     m_Targets[0].create(m_TargetSize.x, m_TargetSize.y);
@@ -71,7 +74,7 @@ void CrazyPainter::Init(sf::Vector2u TargetSize)
     m_EndTangent = m_NextPosition - m_StartPosition; // Catmull-Rom Spline (Faktor = 1)
 }
 
-void CrazyPainter::Move(sf::Time FrameTime, sf::Window& window)
+void CrazyPainter::update(sf::Time FrameTime)
 {
     m_FrameTime = FrameTime;
 
@@ -159,7 +162,8 @@ void CrazyPainter::Move(sf::Time FrameTime, sf::Window& window)
     // Manuel Mode
     else if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        sf::Vector2f MousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
+        // get the mouse position (pixel are mapped to world coordinates, to take resizing the window into account)
+        sf::Vector2f MousePosition = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
 
         for(int i = 0; i < 8; i++)
         {

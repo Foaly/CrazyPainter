@@ -7,7 +7,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Shader.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include <SFML/Window/Window.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #ifndef PI
     #define PI 3.1415926535897932384626433832795f
@@ -49,9 +49,9 @@ inline Interpolation::InterpolationType& operator--(Interpolation::Interpolation
 class CrazyPainter
 {
 public:
-    void Init(sf::Vector2u TargetSize);
+    void Init(sf::RenderWindow& window);
     void Exit();
-    void Move(sf::Time FrameTime, sf::Window& window);
+    void update(sf::Time FrameTime);
     void Render(sf::RenderTarget& Target);
     void HandleEvents(sf::Event& Event, sf::Window& window);
 
@@ -60,6 +60,7 @@ private:
     void changeInterpolationMode(int step);
 
     sf::Vector2f m_TargetSize;
+    sf::RenderWindow* m_window;
     sf::RenderTexture m_Targets[2];
     sf::RenderTexture* m_FrontTarget;
     sf::RenderTexture* m_BackTarget;

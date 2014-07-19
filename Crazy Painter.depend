@@ -419,14 +419,14 @@
 	<cmath>
 	<random>
 
-1405788681 f:\eigene programme\crazy painter\crazypainter.hpp
+1405789288 f:\eigene programme\crazy painter\crazypainter.hpp
 	<SFML/System/Clock.hpp>
 	<SFML/Window/Event.hpp>
 	<SFML/Graphics/RenderTexture.hpp>
 	<SFML/Graphics/Sprite.hpp>
 	<SFML/Graphics/Shader.hpp>
 	<SFML/Graphics/Text.hpp>
-	<SFML/Window/Window.hpp>
+	<SFML/Graphics/RenderWindow.hpp>
 	"RoundendedLine.h"
 	"ColorGenerator.hpp"
 

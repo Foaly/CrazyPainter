@@ -30,7 +30,7 @@ int main()
 
     // Create the painter
     CrazyPainter crazyPainter;
-    crazyPainter.Init(window.getSize());
+    crazyPainter.Init(window);
 
     // Create some veriables
     sf::Event event;
@@ -67,7 +67,7 @@ int main()
         sf::Time frameTime = frameClock.restart();
 
         // move the painter
-        crazyPainter.Move(frameTime, window);
+        crazyPainter.update(frameTime);
 
 //        std::cout << "Framerate: " << 1 / frameTime.asSeconds() << std::endl;
 
