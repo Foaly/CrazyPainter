@@ -106,11 +106,11 @@ void CrazyPainter::update(sf::Time FrameTime)
 
             for(int i = 0; i < 8; i++)
             {
-                m_Lines[i].setPosition(m_Lines[i].getEndPoint());
+                m_Lines[i].setStartPoint(m_Lines[i].getEndPoint());
                 m_Lines[i].setEndPoint(sf::Vector2f(Cos_Lookup[i] * (interpolation.x - m_HalfTargetSize.x) - Sin_Lookup[i] * (interpolation.y - m_HalfTargetSize.y) + m_HalfTargetSize.x, Sin_Lookup[i] * (interpolation.x - m_HalfTargetSize.x) + Cos_Lookup[i] * (interpolation.y - m_HalfTargetSize.y) + m_HalfTargetSize.y));
                 m_Lines[i].setFillColor(m_Color);
 
-                m_Lines[i + 8].setPosition(m_Lines[i + 8].getEndPoint());
+                m_Lines[i + 8].setStartPoint(m_Lines[i + 8].getEndPoint());
                 m_Lines[i + 8].setEndPoint(sf::Vector2f(Cos_Lookup[i] * (interpolation.x - m_HalfTargetSize.x) * - 1 - Sin_Lookup[i] * (interpolation.y - m_HalfTargetSize.y) + m_HalfTargetSize.x, Sin_Lookup[i] * (interpolation.x - m_HalfTargetSize.x) * - 1 + Cos_Lookup[i] * (interpolation.y - m_HalfTargetSize.y) + m_HalfTargetSize.y));
                 m_Lines[i + 8].setFillColor(m_Color);
             }
@@ -138,8 +138,8 @@ void CrazyPainter::update(sf::Time FrameTime)
 
             case Interpolation::Jitter:
             {
-                sf::Vector2f m_currentPosition = m_Lines[0].getPosition();
-                // if the points are outside the target, reset them to the centre
+                sf::Vector2f m_currentPosition = m_Lines[0].getEndPoint();
+                // if the points are outside the target, reset them to the center
                 if(m_currentPosition.x < 0 || m_currentPosition.x > m_TargetSize.x || m_currentPosition.y < 0 || m_currentPosition.y > m_TargetSize.y)
                     ResetLines();
             }
@@ -159,11 +159,11 @@ void CrazyPainter::update(sf::Time FrameTime)
 
         for(int i = 0; i < 8; i++)
         {
-            m_Lines[i].setPosition(m_Lines[i].getEndPoint());
+            m_Lines[i].setStartPoint(m_Lines[i].getEndPoint());
             m_Lines[i].setEndPoint(sf::Vector2f(Cos_Lookup[i] * (MousePosition.x - m_HalfTargetSize.x) - Sin_Lookup[i] * (MousePosition.y - m_HalfTargetSize.y) + m_HalfTargetSize.x, Sin_Lookup[i] * (MousePosition.x - m_HalfTargetSize.x) + Cos_Lookup[i] * (MousePosition.y - m_HalfTargetSize.y) + m_HalfTargetSize.y));
             m_Lines[i].setFillColor(m_Color);
 
-            m_Lines[i + 8].setPosition(m_Lines[i + 8].getEndPoint());
+            m_Lines[i + 8].setStartPoint(m_Lines[i + 8].getEndPoint());
             m_Lines[i + 8].setEndPoint(sf::Vector2f(Cos_Lookup[i] * (MousePosition.x - m_HalfTargetSize.x) * - 1 - Sin_Lookup[i] * (MousePosition.y - m_HalfTargetSize.y) + m_HalfTargetSize.x, Sin_Lookup[i] * (MousePosition.x - m_HalfTargetSize.x) * - 1 + Cos_Lookup[i] * (MousePosition.y - m_HalfTargetSize.y) + m_HalfTargetSize.y));
             m_Lines[i + 8].setFillColor(m_Color);
         }
@@ -300,7 +300,7 @@ void CrazyPainter::ResetLines()
 {
     for(int i = 0; i < 16; i++)
     {
-        m_Lines[i].setPosition(m_HalfTargetSize);
+        m_Lines[i].setStartPoint(m_HalfTargetSize);
         m_Lines[i].setEndPoint(m_HalfTargetSize);
     }
 

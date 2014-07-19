@@ -3,7 +3,7 @@
 -investigate "Star" Mode
 -investigate "Side" Mode
 -Presentation Mode
--make CRoundedLines::setEndpoint use two float parameters instead of one sf::Vector2f (avoid unnesessary copying)
+-make CRoundedLines::setEndpoint use two float parameters instead of one sf::Vector2f (avoid unnesessary copying) [DONE]
 
 -optimize CRoundedLine
 

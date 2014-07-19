@@ -80,7 +80,7 @@ private:
     float Sin_Lookup [8];
     float Cos_Lookup [8];
     sf::Time m_FrameTime;
-    CRoundendedLine m_Lines [16];
+    RoundendedLine m_Lines [16];
     sf::Vector2f m_OldPosition;
     sf::Vector2f m_StartPosition;
     sf::Vector2f m_EndPosition;

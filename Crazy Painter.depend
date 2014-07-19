@@ -411,12 +411,12 @@
 1347542699 source:h:\sicherung_alte_fp\julius\eigene programme\crazy painter\roundendedline.cpp
 	"RoundendedLine.h"
 
-1405794644 source:f:\eigene programme\crazy painter\crazypainter.cpp
+1405796043 source:f:\eigene programme\crazy painter\crazypainter.cpp
 	"CrazyPainter.hpp"
 	"Utilities.hpp"
 	"Random.hpp"
 
-1405794006 f:\eigene programme\crazy painter\crazypainter.hpp
+1405796821 f:\eigene programme\crazy painter\crazypainter.hpp
 	<SFML/System/Clock.hpp>
 	<SFML/Window/Event.hpp>
 	<SFML/Graphics/RenderTexture.hpp>
@@ -650,7 +650,7 @@
 	<algorithm>
 	<SFML/System/Vector2.hpp>
 
-1405794966 source:f:\eigene programme\crazy painter\main.cpp
+1405795160 source:f:\eigene programme\crazy painter\main.cpp
 	<SFML/Graphics/RenderWindow.hpp>
 	<SFML/System/Err.hpp>
 	<SFML/Window/Context.hpp>
@@ -803,8 +803,8 @@
 	<GLES/gl.h>
 	<GLES/glext.h>
 
-1376235292 source:f:\eigene programme\crazy painter\roundendedline.cpp
-	"RoundendedLine.h"
+1405796810 source:f:\eigene programme\crazy painter\roundendedline.cpp
+	"RoundendedLine.hpp"
 
 1405632201 f:\librarys\official sfml\install\include\sfml\system\string.inl
 
@@ -839,7 +839,6 @@
 	<algorithm>
 	<SFML/System/Vector2.hpp>
 
-1405795366 f:\eigene programme\crazy painter\roundendedline.hpp
+1405796955 f:\eigene programme\crazy painter\roundendedline.hpp
 	<SFML/Graphics/Shape.hpp>
-	<cmath>
 
