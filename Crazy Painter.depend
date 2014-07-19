@@ -411,10 +411,10 @@
 1347542699 source:h:\sicherung_alte_fp\julius\eigene programme\crazy painter\roundendedline.cpp
 	"RoundendedLine.h"
 
-1405728208 source:f:\eigene programme\crazy painter\crazypainter.cpp
+1405785678 source:f:\eigene programme\crazy painter\crazypainter.cpp
 	"CrazyPainter.hpp"
 
-1376235269 f:\eigene programme\crazy painter\crazypainter.hpp
+1405786515 f:\eigene programme\crazy painter\crazypainter.hpp
 	<SFML/System/Clock.hpp>
 	<SFML/Window/Event.hpp>
 	<SFML/Graphics/RenderTexture.hpp>
@@ -422,11 +422,7 @@
 	<SFML/Graphics/Shader.hpp>
 	<SFML/Graphics/Text.hpp>
 	<SFML/Window/Window.hpp>
-	<iostream>
-	<cmath>
-	<random>
 	"RoundendedLine.h"
-	"Utilities.h"
 
 1405632201 f:\librarys\official sfml\install\include\sfml\system\clock.hpp
 	<SFML/System/Export.hpp>
@@ -649,7 +645,7 @@
 
 1376215533 f:\eigene programme\crazy painter\utilities.h
 
-1405770063 source:f:\eigene programme\crazy painter\main.cpp
+1405785881 source:f:\eigene programme\crazy painter\main.cpp
 	<SFML/System.hpp>
 	<SFML/Window.hpp>
 	<SFML/Graphics.hpp>
@@ -815,4 +811,12 @@
 1405632270 f:\librarys\official sfml\install\include\sfml\window\touch.hpp
 	<SFML/Window/Export.hpp>
 	<SFML/System/Vector2.hpp>
+
+1405786333 source:f:\eigene programme\crazy painter\random.cpp
+	"Random.hpp"
+	<random>
+	<ctime>
+	<cassert>
+
+1405786365 f:\eigene programme\crazy painter\random.hpp
 

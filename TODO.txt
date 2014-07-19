@@ -12,7 +12,7 @@ _______________________________________
 19.07.2014
 
 - create git repo [DONE]
-- proper Random support
+- proper Random support [DONE]
 - seperate color generation into class (static mehtods)
 - seperate update functionality into seperate classes (composite pattern)
 - general name refactoring

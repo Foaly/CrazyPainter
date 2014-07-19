@@ -1,6 +1,13 @@
 #include "CrazyPainter.hpp"
+#include "Utilities.h"
+#include "Random.hpp"
 
-void CCrazyPainter::Init(sf::Vector2u TargetSize)
+#include <iostream>
+#include <cmath>
+#include <random>
+
+
+void CrazyPainter::Init(sf::Vector2u TargetSize)
 {
     // Get the Targets size
     m_TargetSize = sf::Vector2f(TargetSize);
@@ -49,19 +56,16 @@ void CCrazyPainter::Init(sf::Vector2u TargetSize)
         m_Lines[i].setFillColor(sf::Color::Red);
     }
 
-    // Initilize the random number generator
-    srand(static_cast<unsigned int>(time(NULL)));
-
     // Setup variables needed for the interpolation
     m_TotalTime = sf::seconds(1.f);
     m_StartPosition = m_HalfTargetSize;
-    m_EndPosition.x = (static_cast<float>(rand()) / RAND_MAX * m_TargetSize.x);
-    m_EndPosition.y = (static_cast<float>(rand()) / RAND_MAX * m_TargetSize.y);
+    m_EndPosition.x = random(0.f, m_TargetSize.x);
+    m_EndPosition.y = random(0.f, m_TargetSize.y);
 
 
     // Setup variables needed for the hermite interpolation
-    m_NextPosition.x = (static_cast<float>(rand()) / RAND_MAX * m_TargetSize.x);
-    m_NextPosition.y = (static_cast<float>(rand()) / RAND_MAX * m_TargetSize.y);
+    m_NextPosition.x = random(0.f, m_TargetSize.x);
+    m_NextPosition.y = random(0.f, m_TargetSize.y);
     m_StartTangent.x = 0.f;
     m_StartTangent.y = 0.f;
     m_EndTangent = m_NextPosition - m_StartPosition; // Catmull-Rom Spline (Faktor = 1)
@@ -70,7 +74,7 @@ void CCrazyPainter::Init(sf::Vector2u TargetSize)
     m_fHue = 0.0;
 }
 
-void CCrazyPainter::Move(sf::Time FrameTime, sf::Window& window)
+void CrazyPainter::Move(sf::Time FrameTime, sf::Window& window)
 {
     m_FrameTime = FrameTime;
 
@@ -111,7 +115,7 @@ void CCrazyPainter::Move(sf::Time FrameTime, sf::Window& window)
                 break;
 
             case Interpolation::Jitter:
-                interpolation = sf::Vector2f(m_OldPosition.x + static_cast<float>(rand()) / RAND_MAX * 20 - 10, m_OldPosition.y + static_cast<float>(rand()) / RAND_MAX * 20 -10);
+                interpolation = sf::Vector2f(m_OldPosition.x + random(-10.f, 10.f), m_OldPosition.y + random(-10.f, 10.f));
                 break;
 
             default:
@@ -142,12 +146,12 @@ void CCrazyPainter::Move(sf::Time FrameTime, sf::Window& window)
             case Interpolation::Hermite:
                 m_StartTangent = m_EndTangent;
                 m_EndPosition = m_NextPosition;
-                m_NextPosition = sf::Vector2f((static_cast<float>(rand()) / RAND_MAX * m_TargetSize.x), (static_cast<float>(rand()) / RAND_MAX * m_TargetSize.y));
+                m_NextPosition = sf::Vector2f(random(0.f, m_TargetSize.x), random(0.f, m_TargetSize.y));
                 m_EndTangent = sf::Vector2f(m_NextPosition - m_StartPosition);
                 break;
 
             case Interpolation::Smoothstep:
-                m_EndPosition = sf::Vector2f((static_cast<float>(rand()) / RAND_MAX * m_TargetSize.x), (static_cast<float>(rand()) / RAND_MAX * m_TargetSize.y));
+                m_EndPosition = sf::Vector2f(random(0.f, m_TargetSize.x), random(0.f, m_TargetSize.y));
                 break;
 
             case Interpolation::Jitter:
@@ -187,7 +191,7 @@ void CCrazyPainter::Move(sf::Time FrameTime, sf::Window& window)
 
 }
 
-void CCrazyPainter::Render(sf::RenderTarget& Target)
+void CrazyPainter::Render(sf::RenderTarget& Target)
 {
     // Draw everything to the RenderTexture
     m_FrontTarget->clear(sf::Color::Transparent);
@@ -215,7 +219,7 @@ void CCrazyPainter::Render(sf::RenderTarget& Target)
         Target.draw(m_AuthorName);
 }
 
-void CCrazyPainter::HandleEvents(sf::Event& Event, sf::Window& window)
+void CrazyPainter::HandleEvents(sf::Event& Event, sf::Window& window)
 {
     // Key Events
     if(Event.type == sf::Event::KeyPressed)
@@ -275,7 +279,7 @@ void CCrazyPainter::HandleEvents(sf::Event& Event, sf::Window& window)
         ResetLines();
 }
 
-void CCrazyPainter::changeInterpolationMode(int step)
+void CrazyPainter::changeInterpolationMode(int step)
 {
     m_AutoSwitchingClock.restart();
 
@@ -309,7 +313,7 @@ void CCrazyPainter::changeInterpolationMode(int step)
     }
 }
 
-void CCrazyPainter::ResetLines()
+void CrazyPainter::ResetLines()
 {
     for(int i = 0; i < 16; i++)
     {

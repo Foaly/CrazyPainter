@@ -9,18 +9,12 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Window.hpp>
 
-#include <iostream>
-#include <cmath>
-#include <random>
-
 #ifndef PI
     #define PI 3.1415926535897932384626433832795f
 #endif
 
 
 #include "RoundendedLine.h"
-#include "Utilities.h"
-
 
 
 namespace Interpolation
@@ -51,7 +45,7 @@ inline Interpolation::InterpolationType& operator--(Interpolation::Interpolation
     return obj = static_cast<Interpolation::InterpolationType>(i);
 }
 
-class CCrazyPainter
+class CrazyPainter
 {
 public:
     void Init(sf::Vector2u TargetSize);

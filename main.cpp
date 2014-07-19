@@ -29,27 +29,27 @@ int main()
     window.setFramerateLimit(60);
 
     // Create the painter
-    CCrazyPainter CrazyPainter;
-    CrazyPainter.Init(window.getSize());
+    CrazyPainter crazyPainter;
+    crazyPainter.Init(window.getSize());
 
     // Create some veriables
-    sf::Event Event;
-    sf::Clock FrameClock;
+    sf::Event event;
+    sf::Clock frameClock;
 
     while (window.isOpen())
     {
-        while (window.pollEvent(Event))
+        while (window.pollEvent(event))
         {
             // Close Event
-            if (Event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed)
                 window.close();
 
             // Key Events
-            if(Event.type == sf::Event::KeyPressed)
+            if(event.type == sf::Event::KeyPressed)
             {
                 #ifdef DEBUG
                 // Capture Screenshot
-                if (Event.key.code == sf::Keyboard::F1)
+                if (event.key.code == sf::Keyboard::F1)
                 {
                     sf::Image Screen = window.capture();
                     Screen.saveToFile("screenshot.jpg");
@@ -57,22 +57,24 @@ int main()
                 #endif
 
                 // Escape key pressed, close window
-                if (Event.key.code == sf::Keyboard::Escape)
+                if (event.key.code == sf::Keyboard::Escape)
                     window.close();
             }
 
-            CrazyPainter.HandleEvents(Event, window);
+            crazyPainter.HandleEvents(event, window);
         }
 
-        // move the painter
-        CrazyPainter.Move(FrameClock.restart(), window);
+        sf::Time frameTime = frameClock.restart();
 
-//        std::cout << "Framerate: " << 1 / fFrameTime << std::endl;
+        // move the painter
+        crazyPainter.Move(frameTime, window);
+
+//        std::cout << "Framerate: " << 1 / frameTime.asSeconds() << std::endl;
 
 
         // Draw to the window
         window.clear();
-        CrazyPainter.Render(window);
+        crazyPainter.Render(window);
         window.display();
     }
 
