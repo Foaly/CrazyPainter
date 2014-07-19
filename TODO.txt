@@ -16,7 +16,7 @@ _______________________________________
 - seperate color generation into class (static mehtods) [DONE]
 - seperate update functionality into seperate classes (composite pattern)
 - general name refactoring
-- log file + log run time
+- log file + log run time [DONE]
 
 
 
