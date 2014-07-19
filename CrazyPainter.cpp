@@ -47,7 +47,7 @@ CrazyPainter::CrazyPainter(sf::RenderWindow& window)
     }
 
     // Initialize the lines
-    ResetLines();
+    resetLines();
     for(int i = 0; i < 16; i++)
     {
         m_Lines[i].setWidth(5);
@@ -104,19 +104,7 @@ void CrazyPainter::update(sf::Time FrameTime)
                 break;
             }
 
-            for(int i = 0; i < 8; i++)
-            {
-                m_Lines[i].setStartPoint(m_Lines[i].getEndPoint());
-                m_Lines[i].setEndPoint(sf::Vector2f(Cos_Lookup[i] * (interpolation.x - m_HalfTargetSize.x) - Sin_Lookup[i] * (interpolation.y - m_HalfTargetSize.y) + m_HalfTargetSize.x, Sin_Lookup[i] * (interpolation.x - m_HalfTargetSize.x) + Cos_Lookup[i] * (interpolation.y - m_HalfTargetSize.y) + m_HalfTargetSize.y));
-                m_Lines[i].setFillColor(m_Color);
-
-                m_Lines[i + 8].setStartPoint(m_Lines[i + 8].getEndPoint());
-                m_Lines[i + 8].setEndPoint(sf::Vector2f(Cos_Lookup[i] * (interpolation.x - m_HalfTargetSize.x) * - 1 - Sin_Lookup[i] * (interpolation.y - m_HalfTargetSize.y) + m_HalfTargetSize.x, Sin_Lookup[i] * (interpolation.x - m_HalfTargetSize.x) * - 1 + Cos_Lookup[i] * (interpolation.y - m_HalfTargetSize.y) + m_HalfTargetSize.y));
-                m_Lines[i + 8].setFillColor(m_Color);
-            }
-
-
-            m_OldPosition = interpolation;
+            calculateLines(interpolation);
         }
         else
         {
@@ -141,7 +129,7 @@ void CrazyPainter::update(sf::Time FrameTime)
                 sf::Vector2f m_currentPosition = m_Lines[0].getEndPoint();
                 // if the points are outside the target, reset them to the center
                 if(m_currentPosition.x < 0 || m_currentPosition.x > m_TargetSize.x || m_currentPosition.y < 0 || m_currentPosition.y > m_TargetSize.y)
-                    ResetLines();
+                    resetLines();
             }
 
             default:
@@ -151,25 +139,13 @@ void CrazyPainter::update(sf::Time FrameTime)
             m_CurrentTime.restart();
         }
     }
-    // Manuel Mode
+    // Manual Mode
     else if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         // get the mouse position (pixel are mapped to world coordinates, to take resizing the window into account)
-        sf::Vector2f MousePosition = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
+        sf::Vector2f mousePosition = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
 
-        for(int i = 0; i < 8; i++)
-        {
-            m_Lines[i].setStartPoint(m_Lines[i].getEndPoint());
-            m_Lines[i].setEndPoint(sf::Vector2f(Cos_Lookup[i] * (MousePosition.x - m_HalfTargetSize.x) - Sin_Lookup[i] * (MousePosition.y - m_HalfTargetSize.y) + m_HalfTargetSize.x, Sin_Lookup[i] * (MousePosition.x - m_HalfTargetSize.x) + Cos_Lookup[i] * (MousePosition.y - m_HalfTargetSize.y) + m_HalfTargetSize.y));
-            m_Lines[i].setFillColor(m_Color);
-
-            m_Lines[i + 8].setStartPoint(m_Lines[i + 8].getEndPoint());
-            m_Lines[i + 8].setEndPoint(sf::Vector2f(Cos_Lookup[i] * (MousePosition.x - m_HalfTargetSize.x) * - 1 - Sin_Lookup[i] * (MousePosition.y - m_HalfTargetSize.y) + m_HalfTargetSize.x, Sin_Lookup[i] * (MousePosition.x - m_HalfTargetSize.x) * - 1 + Cos_Lookup[i] * (MousePosition.y - m_HalfTargetSize.y) + m_HalfTargetSize.y));
-            m_Lines[i + 8].setFillColor(m_Color);
-        }
-
-
-        m_OldPosition = MousePosition;
+        calculateLines(mousePosition);
     }
 
 }
@@ -227,7 +203,7 @@ void CrazyPainter::handleEvents(sf::Event& event, sf::Window& window)
             window.setMouseCursorVisible(!m_bAutoDrawing);
             m_StartPosition = m_OldPosition;
             m_CurrentTime.restart();
-            ResetLines();
+            resetLines();
             break;
         case sf::Keyboard::S:
             // toggle automatic switching between interpolation modes
@@ -251,7 +227,7 @@ void CrazyPainter::handleEvents(sf::Event& event, sf::Window& window)
             break;
         case sf::Keyboard::Num3:
             m_InterpolationType = Interpolation::Jitter;
-            ResetLines();
+            resetLines();
             break;
         default:
             break;
@@ -259,7 +235,7 @@ void CrazyPainter::handleEvents(sf::Event& event, sf::Window& window)
     }
     // Reset on MouseRelease
     else if ((event.type == sf::Event::MouseButtonReleased) && (event.mouseButton.button == sf::Mouse::Left) && !m_bAutoDrawing)
-        ResetLines();
+        resetLines();
 }
 
 void CrazyPainter::changeInterpolationMode(int step)
@@ -276,7 +252,7 @@ void CrazyPainter::changeInterpolationMode(int step)
         if(m_InterpolationType == Interpolation::Jitter)
         {
             m_bFade = false;
-            ResetLines();
+            resetLines();
             m_BackTarget->clear();
         }
         else
@@ -296,7 +272,7 @@ void CrazyPainter::changeInterpolationMode(int step)
     }
 }
 
-void CrazyPainter::ResetLines()
+void CrazyPainter::resetLines()
 {
     for(int i = 0; i < 16; i++)
     {
@@ -305,4 +281,20 @@ void CrazyPainter::ResetLines()
     }
 
     m_OldPosition = m_HalfTargetSize;
+}
+
+void CrazyPainter::calculateLines(const sf::Vector2f nextPoint)
+{
+    for(int i = 0; i < 8; i++)
+    {
+        m_Lines[i].setStartPoint(m_Lines[i].getEndPoint());
+        m_Lines[i].setEndPoint(sf::Vector2f(Cos_Lookup[i] * (nextPoint.x - m_HalfTargetSize.x) - Sin_Lookup[i] * (nextPoint.y - m_HalfTargetSize.y) + m_HalfTargetSize.x, Sin_Lookup[i] * (nextPoint.x - m_HalfTargetSize.x) + Cos_Lookup[i] * (nextPoint.y - m_HalfTargetSize.y) + m_HalfTargetSize.y));
+        m_Lines[i].setFillColor(m_Color);
+
+        m_Lines[i + 8].setStartPoint(m_Lines[i + 8].getEndPoint());
+        m_Lines[i + 8].setEndPoint(sf::Vector2f(Cos_Lookup[i] * (nextPoint.x - m_HalfTargetSize.x) * - 1 - Sin_Lookup[i] * (nextPoint.y - m_HalfTargetSize.y) + m_HalfTargetSize.x, Sin_Lookup[i] * (nextPoint.x - m_HalfTargetSize.x) * - 1 + Cos_Lookup[i] * (nextPoint.y - m_HalfTargetSize.y) + m_HalfTargetSize.y));
+        m_Lines[i + 8].setFillColor(m_Color);
+    }
+
+    m_OldPosition = nextPoint;
 }

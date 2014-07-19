@@ -56,7 +56,8 @@ public:
     void handleEvents(sf::Event& event, sf::Window& window);
 
 private:
-    void ResetLines();
+    void resetLines();
+    void calculateLines(const sf::Vector2f nextPoint);
     void changeInterpolationMode(int step);
 
     sf::Vector2f m_TargetSize;
