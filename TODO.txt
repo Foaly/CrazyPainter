@@ -17,7 +17,7 @@ _______________________________________
 - seperate update functionality into seperate classes (composite pattern) [DONE]
 - general name refactoring [DONE]
 - log file + log run time [DONE]
-- optimize calculateLines()
+- optimize calculateLines() [DONE]
 - investigate "Cirlce" Mode (interpolate between 0 and 360; also interpolate radius) [DONE]
 - improve the code that switched between modes
 

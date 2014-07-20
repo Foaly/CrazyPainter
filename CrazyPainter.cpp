@@ -249,14 +249,22 @@ void CrazyPainter::resetLines()
 
 void CrazyPainter::calculateLines(const sf::Vector2f nextPoint)
 {
+    const float xDiff = nextPoint.x - m_halfTargetSize.x;
+    const float yDiff = nextPoint.y - m_halfTargetSize.y;
+
     for(int i = 0; i < 8; i++)
     {
+        const float cosXDiff = m_cosLookupTable[i] * xDiff;
+        const float cosYDiff = m_cosLookupTable[i] * yDiff;
+        const float sinXDiff = m_sinLookupTable[i] * xDiff;
+        const float sinYDiff = m_sinLookupTable[i] * yDiff;
+
         m_lines[i].setStartPoint(m_lines[i].getEndPoint());
-        m_lines[i].setEndPoint(sf::Vector2f(m_cosLookupTable[i] * (nextPoint.x - m_halfTargetSize.x) - m_sinLookupTable[i] * (nextPoint.y - m_halfTargetSize.y) + m_halfTargetSize.x, m_sinLookupTable[i] * (nextPoint.x - m_halfTargetSize.x) + m_cosLookupTable[i] * (nextPoint.y - m_halfTargetSize.y) + m_halfTargetSize.y));
+        m_lines[i].setEndPoint(sf::Vector2f(cosXDiff - sinYDiff + m_halfTargetSize.x, sinXDiff + cosYDiff + m_halfTargetSize.y));
         m_lines[i].setFillColor(m_color);
 
         m_lines[i + 8].setStartPoint(m_lines[i + 8].getEndPoint());
-        m_lines[i + 8].setEndPoint(sf::Vector2f(m_cosLookupTable[i] * (nextPoint.x - m_halfTargetSize.x) * - 1 - m_sinLookupTable[i] * (nextPoint.y - m_halfTargetSize.y) + m_halfTargetSize.x, m_sinLookupTable[i] * (nextPoint.x - m_halfTargetSize.x) * - 1 + m_cosLookupTable[i] * (nextPoint.y - m_halfTargetSize.y) + m_halfTargetSize.y));
+        m_lines[i + 8].setEndPoint(sf::Vector2f(cosXDiff * - 1 - sinYDiff + m_halfTargetSize.x, sinXDiff * - 1 + cosYDiff + m_halfTargetSize.y));
         m_lines[i + 8].setFillColor(m_color);
     }
 
