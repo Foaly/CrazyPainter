@@ -14,7 +14,7 @@ template <typename T> T Linear_Interpolation(T& start, T& end, float& amount)
     return static_cast<T>((end * amount) + (start * (1 - amount)));
 }
 
-template <typename T> T Smoothstep_x2_Interpolation(T& start, T& end, float& amount)
+template <typename T> T Smoothstep_x2_Interpolation(T& start, T& end, float amount)
 {
     // calculate smoothstep
     amount =  amount * amount * (3 - 2 * (amount));

@@ -14,9 +14,10 @@ _______________________________________
 - create git repo [DONE]
 - proper Random support [DONE]
 - seperate color generation into class (static mehtods) [DONE]
-- seperate update functionality into seperate classes (composite pattern)
-- general name refactoring
+- seperate update functionality into seperate classes (composite pattern) [DONE]
+- general name refactoring [DONE]
 - log file + log run time [DONE]
+- optimize calculateLines()
 
 
 

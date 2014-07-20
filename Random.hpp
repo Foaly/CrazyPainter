@@ -33,6 +33,13 @@ float randomDev(float middle, float deviation);
 
 
 /**
+ *  This function returns a random bool. Each state has the
+ *  propability of 50%. Just like flipping a coin.
+ */
+bool randomBool();
+
+
+/**
  *  This function sets a new seed.
  */
 void setRandomSeed(unsigned long seed);

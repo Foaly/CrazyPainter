@@ -9,6 +9,8 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include <memory>
+
 #ifndef PI
     #define PI 3.1415926535897932384626433832795f
 #endif
@@ -16,43 +18,19 @@
 
 #include "RoundendedLine.hpp"
 #include "ColorGenerator.hpp"
+#include "InterpolationMode.hpp"
+#include "HermiteInterpolation.hpp"
+#include "SmoothstepInterpolation.hpp"
+#include "JitterMode.hpp"
 
-
-namespace Interpolation
-{
-    enum InterpolationType
-    {
-        Hermite,
-        Smoothstep,
-        Jitter,
-
-        InterpolationModeCount = 3
-    };
-}
-
-inline Interpolation::InterpolationType& operator++(Interpolation::InterpolationType& obj)
-{
-    int i = obj;
-    if( ++i >= Interpolation::InterpolationModeCount )
-        i = Interpolation::Hermite;
-    return obj = static_cast<Interpolation::InterpolationType>(i);
-}
-
-inline Interpolation::InterpolationType& operator--(Interpolation::InterpolationType& obj)
-{
-    int i = obj;
-    if( --i <= -1 )
-        i = Interpolation::InterpolationModeCount - 1;
-    return obj = static_cast<Interpolation::InterpolationType>(i);
-}
 
 class CrazyPainter
 {
 public:
     CrazyPainter(sf::RenderWindow& window);
 
-    void update(sf::Time FrameTime);
-    void render(sf::RenderTarget& Target);
+    void update(sf::Time frameTime);
+    void render(sf::RenderTarget& target);
     void handleEvents(sf::Event& event, sf::Window& window);
 
 private:
@@ -60,38 +38,32 @@ private:
     void calculateLines(const sf::Vector2f nextPoint);
     void changeInterpolationMode(int step);
 
-    sf::Vector2f m_TargetSize;
+    sf::Vector2f m_targetSize;
     sf::RenderWindow* m_window;
-    sf::RenderTexture m_Targets[2];
-    sf::RenderTexture* m_FrontTarget;
-    sf::RenderTexture* m_BackTarget;
-    sf::Sprite m_RenderSprite;
-    sf::Shader m_FadeShader;
-    sf::Font m_Font;
-    sf::Text m_AuthorName;
-    bool m_bFade;
-    bool m_bAutoDrawing;
-    bool m_bAutoSwitching;
-    bool m_bWatermark;
-    float m_fFadeSpeed;
-    sf::Clock m_AutoSwitchingClock;
-    sf::Time m_AutoSwitchingDuration;
-    Interpolation::InterpolationType m_InterpolationType;
-    sf::Vector2f m_HalfTargetSize;
-    float Sin_Lookup [8];
-    float Cos_Lookup [8];
-    sf::Time m_FrameTime;
-    RoundendedLine m_Lines [16];
-    sf::Vector2f m_OldPosition;
-    sf::Vector2f m_StartPosition;
-    sf::Vector2f m_EndPosition;
-    sf::Vector2f m_NextPosition;
-    sf::Vector2f m_StartTangent;
-    sf::Vector2f m_EndTangent;
-    sf::Time m_TotalTime;
-    sf::Clock m_CurrentTime;
+    std::array<sf::RenderTexture, 2> m_renderTargets;
+    sf::RenderTexture* m_frontTarget;
+    sf::RenderTexture* m_backTarget;
+    sf::Sprite m_renderSprite;
+    sf::Shader m_fadeShader;
+    sf::Font m_font;
+    sf::Text m_authorName;
+    bool m_isFading;
+    bool m_isAutoDrawing;
+    bool m_isAutoSwitching;
+    bool m_showWatermark;
+    float m_fadeSpeed;
+    sf::Clock m_autoSwitchingClock;
+    sf::Time m_autoSwitchingDuration;
+    Interpolation::InterpolationType m_currentInterpolationType;
+    std::array<std::unique_ptr<InterpolationMode>, 3> m_interpolationModes;
+    sf::Vector2f m_halfTargetSize;
+    std::array<float, 8> m_sinLookupTable;
+    std::array<float, 8> m_cosLookupTable;
+    sf::Time m_frameTime;
+    std::array<RoundendedLine, 16> m_lines;
+    sf::Vector2f m_lastPosition;
     ColorGenerator m_colorGenerator;
-    sf::Color m_Color;
+    sf::Color m_color;
 };
 
 #endif // CRAZYPAINTER_INCLUDE

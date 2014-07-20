@@ -36,6 +36,12 @@ float randomDev(float middle, float deviation)
     return random(middle - deviation, middle + deviation);
 }
 
+bool randomBool()
+{
+    std::bernoulli_distribution equalBoolDistribution(0.5);
+    return equalBoolDistribution(getGenerator());
+}
+
 void setRandomSeed(unsigned long seed)
 {
     getGenerator().seed(seed);
