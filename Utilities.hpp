@@ -9,7 +9,7 @@ template <typename T> T clamp(const T& value, const T& min, const T& max)
   return std::max(min, std::min(max, value));
 }
 
-template <typename T> T Linear_Interpolation(T& start, T& end, float& amount)
+template <typename T> T Linear_Interpolation(const T& start, const T& end, const float amount)
 {
     return static_cast<T>((end * amount) + (start * (1 - amount)));
 }

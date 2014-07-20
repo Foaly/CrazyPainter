@@ -1,7 +1,5 @@
 #include "HermiteInterpolation.hpp"
 
-HermiteInterpolation::HermiteInterpolation() {} //to be removed
-
 HermiteInterpolation::HermiteInterpolation(const sf::Vector2f targetSize, const sf::Time duration)
 {
     m_targetSize = targetSize;

@@ -7,7 +7,6 @@
 class HermiteInterpolation : public InterpolationMode
 {
 public:
-    HermiteInterpolation();//to be removed
     HermiteInterpolation(const sf::Vector2f targetSize, const sf::Time duration = sf::seconds(1.f));
     sf::Vector2f nextStep(const sf::Time elapsedTime);
     void reset(sf::Vector2f lastPosition);

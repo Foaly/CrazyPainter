@@ -8,6 +8,10 @@
 #include "Random.hpp"
 #include "Utilities.hpp"
 
+#ifndef PI
+    #define PI 3.1415926535897932384626433832795f
+#endif
+
 
 namespace Interpolation
 {
@@ -16,8 +20,9 @@ namespace Interpolation
         Hermite,
         Smoothstep,
         Jitter,
+        Circle,
 
-        InterpolationModeCount = 3
+        InterpolationModeCount = 4
     };
 }
 

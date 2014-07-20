@@ -2,6 +2,12 @@
 #include "Utilities.hpp"
 #include "Random.hpp"
 
+#include "HermiteInterpolation.hpp"
+#include "SmoothstepInterpolation.hpp"
+#include "JitterMode.hpp"
+#include "CircleInterpolation.hpp"
+
+
 CrazyPainter::CrazyPainter(sf::RenderWindow& window)
 {
     // save a reference to the window, to get mouse input
@@ -55,9 +61,10 @@ CrazyPainter::CrazyPainter(sf::RenderWindow& window)
     }
 
     // create an array of interpolation modes, so we can choose between them later
-    m_interpolationModes[0] = std::unique_ptr<InterpolationMode>(new HermiteInterpolation(m_targetSize));
-    m_interpolationModes[1] = std::unique_ptr<InterpolationMode>(new SmoothstepInterpolation(m_targetSize));
-    m_interpolationModes[2] = std::unique_ptr<InterpolationMode>(new JitterMode(m_targetSize));
+    m_interpolationModes[Interpolation::Hermite] = std::unique_ptr<InterpolationMode>(new HermiteInterpolation(m_targetSize));
+    m_interpolationModes[Interpolation::Smoothstep] = std::unique_ptr<InterpolationMode>(new SmoothstepInterpolation(m_targetSize));
+    m_interpolationModes[Interpolation::Jitter] = std::unique_ptr<InterpolationMode>(new JitterMode(m_targetSize));
+    m_interpolationModes[Interpolation::Circle] = std::unique_ptr<InterpolationMode>(new CircleInterpolation(m_targetSize));
 }
 
 void CrazyPainter::update(sf::Time frameTime)
@@ -183,12 +190,16 @@ void CrazyPainter::handleEvents(sf::Event& event, sf::Window& window)
             m_currentInterpolationType = Interpolation::Jitter;
             m_interpolationModes[m_currentInterpolationType]->reset(m_lastPosition);
             break;
+        case sf::Keyboard::Num4:
+            m_currentInterpolationType = Interpolation::Circle;
+            m_interpolationModes[m_currentInterpolationType]->reset(m_lastPosition);
+            break;
         default:
             break;
         }
     }
-    // Reset on MouseRelease
-    else if ((event.type == sf::Event::MouseButtonReleased) && (event.mouseButton.button == sf::Mouse::Left) && !m_isAutoDrawing)
+    // in manual mode reset the lines on MouseRelease
+    else if (!m_isAutoDrawing && (event.type == sf::Event::MouseButtonReleased) && (event.mouseButton.button == sf::Mouse::Left))
         resetLines();
 }
 

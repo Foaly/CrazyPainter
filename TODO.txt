@@ -18,6 +18,8 @@ _______________________________________
 - general name refactoring [DONE]
 - log file + log run time [DONE]
 - optimize calculateLines()
+- investigate "Cirlce" Mode (interpolate between 0 and 360; also interpolate radius) [DONE]
+- improve the code that switched between modes
 
 
 

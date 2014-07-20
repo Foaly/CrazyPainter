@@ -411,12 +411,16 @@
 1347542699 source:h:\sicherung_alte_fp\julius\eigene programme\crazy painter\roundendedline.cpp
 	"RoundendedLine.h"
 
-1405818899 source:f:\eigene programme\crazy painter\crazypainter.cpp
+1405867423 source:f:\eigene programme\crazy painter\crazypainter.cpp
 	"CrazyPainter.hpp"
 	"Utilities.hpp"
 	"Random.hpp"
+	"HermiteInterpolation.hpp"
+	"SmoothstepInterpolation.hpp"
+	"JitterMode.hpp"
+	"CircleInterpolation.hpp"
 
-1405819359 f:\eigene programme\crazy painter\crazypainter.hpp
+1405867629 f:\eigene programme\crazy painter\crazypainter.hpp
 	<SFML/System/Clock.hpp>
 	<SFML/Window/Event.hpp>
 	<SFML/Graphics/RenderTexture.hpp>
@@ -428,9 +432,6 @@
 	"RoundendedLine.hpp"
 	"ColorGenerator.hpp"
 	"InterpolationMode.hpp"
-	"HermiteInterpolation.hpp"
-	"SmoothstepInterpolation.hpp"
-	"JitterMode.hpp"
 
 1405632201 f:\librarys\official sfml\install\include\sfml\system\clock.hpp
 	<SFML/System/Export.hpp>
@@ -655,7 +656,7 @@
 	<algorithm>
 	<SFML/System/Vector2.hpp>
 
-1405795160 source:f:\eigene programme\crazy painter\main.cpp
+1405819536 source:f:\eigene programme\crazy painter\main.cpp
 	<SFML/Graphics/RenderWindow.hpp>
 	<SFML/System/Err.hpp>
 	<SFML/Window/Context.hpp>
@@ -840,24 +841,24 @@
 	<SFML\Graphics\Color.hpp>
 	"Utilities.hpp"
 
-1405812754 f:\eigene programme\crazy painter\utilities.hpp
+1405867565 f:\eigene programme\crazy painter\utilities.hpp
 	<algorithm>
 	<SFML/System/Vector2.hpp>
 
 1405796955 f:\eigene programme\crazy painter\roundendedline.hpp
 	<SFML/Graphics/Shape.hpp>
 
-1405818213 f:\eigene programme\crazy painter\interpolationmode.hpp
+1405865048 f:\eigene programme\crazy painter\interpolationmode.hpp
 	<SFML/System/Vector2.hpp>
 	<SFML/System/Time.hpp>
 	<SFML/System/Clock.hpp>
 	"Random.hpp"
 	"Utilities.hpp"
 
-1405818213 f:\eigene programme\crazy painter\hermiteinterpolation.hpp
+1405863922 f:\eigene programme\crazy painter\hermiteinterpolation.hpp
 	"InterpolationMode.hpp"
 
-1405818271 source:f:\eigene programme\crazy painter\hermiteinterpolation.cpp
+1405863931 source:f:\eigene programme\crazy painter\hermiteinterpolation.cpp
 	"HermiteInterpolation.hpp"
 
 1405812106 source:f:\eigene programme\crazy painter\interpolationmode.cpp
@@ -873,5 +874,13 @@
 	"JitterMode.hpp"
 
 1405813661 f:\eigene programme\crazy painter\jittermode.hpp
+	"InterpolationMode.hpp"
+
+1405867295 source:f:\eigene programme\crazy painter\circleinterpolation.cpp
+	"CircleInterpolation.hpp"
+	<cmath>
+	<iostream>
+
+1405866973 f:\eigene programme\crazy painter\circleinterpolation.hpp
 	"InterpolationMode.hpp"
 

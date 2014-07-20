@@ -11,18 +11,10 @@
 
 #include <memory>
 
-#ifndef PI
-    #define PI 3.1415926535897932384626433832795f
-#endif
-
 
 #include "RoundendedLine.hpp"
 #include "ColorGenerator.hpp"
 #include "InterpolationMode.hpp"
-#include "HermiteInterpolation.hpp"
-#include "SmoothstepInterpolation.hpp"
-#include "JitterMode.hpp"
-
 
 class CrazyPainter
 {
@@ -55,7 +47,7 @@ private:
     sf::Clock m_autoSwitchingClock;
     sf::Time m_autoSwitchingDuration;
     Interpolation::InterpolationType m_currentInterpolationType;
-    std::array<std::unique_ptr<InterpolationMode>, 3> m_interpolationModes;
+    std::array<std::unique_ptr<InterpolationMode>, Interpolation::InterpolationModeCount> m_interpolationModes;
     sf::Vector2f m_halfTargetSize;
     std::array<float, 8> m_sinLookupTable;
     std::array<float, 8> m_cosLookupTable;
