@@ -42,10 +42,12 @@ int main()
     std::cout << "Maximum Textursize: " << sf::Texture::getMaximumSize() << std::endl;
 
     // Set up the window
+    sf::ContextSettings contextSettings;
+    contextSettings.antialiasingLevel = 16;
 #ifdef DEBUG
-    sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Crazy Painter");
+    sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Crazy Painter", sf::Style::Default, contextSettings);
 #else
-    sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Crazy Painter", sf::Style::Fullscreen);
+    sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Crazy Painter", sf::Style::Fullscreen, contextSettings);
 #endif
     window.setFramerateLimit(60);
 

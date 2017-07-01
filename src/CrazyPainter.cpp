@@ -146,6 +146,7 @@ void CrazyPainter::handleEvents(sf::Event& event, sf::Window& window)
         case sf::Keyboard::C:
             // Clear RenderTexture
             m_backTarget->clear();
+            m_backTarget->display();
             break;
         case sf::Keyboard::F:
             // Toggle RenderTexture fading
@@ -220,6 +221,7 @@ void CrazyPainter::changeInterpolationMode(int step)
             m_isFading = false;
             resetLines();
             m_backTarget->clear();
+            m_backTarget->display();
         }
         else
         {
