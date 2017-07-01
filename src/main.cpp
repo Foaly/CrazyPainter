@@ -8,6 +8,7 @@
 
 
 #include "CrazyPainter.hpp"
+#include "PathResolver.hpp"
 
 int main()
 {
@@ -17,14 +18,24 @@ int main()
 
 #ifndef DEBUG
     // create a file name containing the current date and time so logs dont get overwritten
-    char filenameCharBuffer [34];
-    std::strftime(filenameCharBuffer, sizeof(filenameCharBuffer), "logs/log %d %b %Y %H.%M.%S.log", std::localtime(&startTime_t));
+    char timeDate [21];
+    std::strftime(timeDate, sizeof(timeDate), "%d %b %Y %H.%M.%S", std::localtime(&startTime_t));
+
+    std::string logFileName = resolvePath("logs/" + std::string(timeDate) + ".log");
 
     // in release build redirect the errors to a log, so we can view them later
-    std::ofstream log (filenameCharBuffer);
-    //sf::err().rdbuf(log.rdbuf()); // redirect sf::err to the log
-    //std::cerr.rdbuf(log.rdbuf()); // redirect std::cerr to the log
-    //std::cout.rdbuf(log.rdbuf()); // redirect std::cout to the log
+    std::ofstream log (logFileName);
+    //save old buffer
+    auto cinbuf = std::cin.rdbuf();
+    auto coutbuf = std::cout.rdbuf();
+    if (log.is_open())
+    {
+        std::cout << "Log was opened successfully. All further info is logged in: " << logFileName << std::endl;
+
+        sf::err().rdbuf(log.rdbuf()); // redirect sf::err to the log
+        std::cerr.rdbuf(log.rdbuf()); // redirect std::cerr to the log
+        std::cout.rdbuf(log.rdbuf()); // redirect std::cout to the log
+    }
 #endif
 
 	// log the start time
@@ -106,6 +117,10 @@ int main()
     std::chrono::duration<double> runTimeInSeconds = std::chrono::duration_cast<std::chrono::duration<double>>(endOfProgramTimePoint - startOfProgramTimePoint);
     std::cout << std::endl << "The program has been running for: " << static_cast<long>(std::floor(runTimeInSeconds.count())) / 60 << " minutes and " << std::fmod(runTimeInSeconds.count(), 60) << " seconds." << std::endl;
 
+
+    // reset to standard input/output again
+    std::cin.rdbuf(cinbuf);
+    std::cout.rdbuf(coutbuf);
 
     return 0;
 }
