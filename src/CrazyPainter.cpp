@@ -22,6 +22,10 @@ CrazyPainter::CrazyPainter(sf::RenderWindow& window)
     m_renderTargets[1].create(m_targetSize.x, m_targetSize.y);
     m_frontTarget = &m_renderTargets[0];
     m_backTarget = &m_renderTargets[1];
+    m_frontTarget->clear();
+    m_frontTarget->display();
+    m_backTarget->clear();
+    m_backTarget->display();
 
     // Set up the fade shader
     m_fadeShader.loadFromFile(resolvePath("data/FadeShader.frag"), sf::Shader::Fragment);
@@ -139,7 +143,7 @@ void CrazyPainter::render(sf::RenderTarget& target)
 void CrazyPainter::handleEvents(sf::Event& event, sf::Window& window)
 {
     // Key Events
-    if(event.type == sf::Event::KeyPressed)
+    if(event.type == sf::Event::KeyReleased)
     {
         switch(event.key.code)
         {

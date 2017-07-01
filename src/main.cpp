@@ -78,14 +78,18 @@ int main()
                 window.close();
 
             // Key Events
-            if(event.type == sf::Event::KeyPressed)
+            if(event.type == sf::Event::KeyReleased)
             {
                 #ifdef DEBUG
                 // Capture Screenshot
                 if (event.key.code == sf::Keyboard::F1)
                 {
-                    sf::Image screenShot = window.capture();
-                    screenShot.saveToFile("screenshot.jpg");
+                    sf::Vector2u windowSize = window.getSize();
+                    sf::Texture texture;
+                    texture.create(windowSize.x, windowSize.y);
+                    texture.update(window);
+                    sf::Image screenshot = texture.copyToImage();
+                    screenshot.saveToFile("screenshot.jpg");
                 }
                 #endif
 
@@ -118,9 +122,11 @@ int main()
     std::cout << std::endl << "The program has been running for: " << static_cast<long>(std::floor(runTimeInSeconds.count())) / 60 << " minutes and " << std::fmod(runTimeInSeconds.count(), 60) << " seconds." << std::endl;
 
 
+#ifndef DEBUG
     // reset to standard input/output again
     std::cin.rdbuf(cinbuf);
     std::cout.rdbuf(coutbuf);
+#endif
 
     return 0;
 }
