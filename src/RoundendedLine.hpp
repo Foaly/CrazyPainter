@@ -24,8 +24,8 @@ public:
 
     void setWidth(const float width);
 
-    virtual unsigned int getPointCount() const;
-    virtual sf::Vector2f getPoint(unsigned int index) const;
+    std::size_t getPointCount() const override;
+    sf::Vector2f getPoint(std::size_t index) const override;
 
 
 private :

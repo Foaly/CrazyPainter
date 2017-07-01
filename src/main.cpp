@@ -12,7 +12,7 @@
 int main()
 {
     // measure the time since the start of the program
-	std::chrono::high_resolution_clock::time_point startOfProgramTimePoint = std::chrono::high_resolution_clock::now();
+	std::chrono::system_clock::time_point startOfProgramTimePoint = std::chrono::system_clock::now();
     std::time_t startTime_t = std::chrono::system_clock::to_time_t(startOfProgramTimePoint);
 
 #ifndef DEBUG
@@ -99,7 +99,7 @@ int main()
     }
 
     // Print out how long the program has been running
-    std::chrono::high_resolution_clock::time_point endOfProgramTimePoint = std::chrono::high_resolution_clock::now();
+    std::chrono::system_clock::time_point endOfProgramTimePoint = std::chrono::system_clock::now();
 
     std::chrono::duration<double> runTimeInSeconds = std::chrono::duration_cast<std::chrono::duration<double>>(endOfProgramTimePoint - startOfProgramTimePoint);
     std::cout << std::endl << "The program has been running for: " << static_cast<long>(std::floor(runTimeInSeconds.count())) / 60 << " minutes and " << std::fmod(runTimeInSeconds.count(), 60) << " seconds." << std::endl;

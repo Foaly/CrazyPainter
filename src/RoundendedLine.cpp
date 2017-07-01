@@ -1,5 +1,7 @@
 #include "RoundendedLine.hpp"
 
+#include <cmath>
+
 RoundendedLine::RoundendedLine(const sf::Vector2f& endPoint, const float width) :
     m_endPoint (endPoint),
     m_width (width)
@@ -46,12 +48,12 @@ void RoundendedLine::setWidth(const float width)
     update();
 }
 
-unsigned int RoundendedLine::getPointCount() const
+std::size_t RoundendedLine::getPointCount() const
 {
     return 30;
 }
 
-sf::Vector2f RoundendedLine::getPoint(unsigned int index) const
+sf::Vector2f RoundendedLine::getPoint(std::size_t index) const
 {
 //    std::cout << "beeing called!";
     sf::Vector2f P1(1.0, 0.0);

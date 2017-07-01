@@ -10,7 +10,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include <memory>
-
+#include <array>
 
 #include "RoundendedLine.hpp"
 #include "ColorGenerator.hpp"

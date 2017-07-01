@@ -2,6 +2,7 @@
 #define UTILITIES_H
 
 #include <algorithm>
+#include <cmath>
 #include <SFML/System/Vector2.hpp>
 
 template <typename T> T clamp(const T& value, const T& min, const T& max)
