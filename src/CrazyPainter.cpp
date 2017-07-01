@@ -1,6 +1,7 @@
 #include "CrazyPainter.hpp"
 #include "Utilities.hpp"
 #include "Random.hpp"
+#include "PathResolver.hpp"
 
 #include "HermiteInterpolation.hpp"
 #include "SmoothstepInterpolation.hpp"
@@ -23,16 +24,16 @@ CrazyPainter::CrazyPainter(sf::RenderWindow& window)
     m_backTarget = &m_renderTargets[1];
 
     // Set up the fade shader
-    m_fadeShader.loadFromFile("FadeShader.frag", sf::Shader::Fragment);
-    m_fadeShader.setParameter("texture", sf::Shader::CurrentTexture);
+    m_fadeShader.loadFromFile(resolvePath("data/FadeShader.frag"), sf::Shader::Fragment);
+    m_fadeShader.setUniform("texture", sf::Shader::CurrentTexture);
 
     // Load a font and set a string as a "watermark"
-    m_font.loadFromFile("LiberationSans-Regular.ttf");
+    m_font.loadFromFile(resolvePath("data/LiberationSans-Regular.ttf"));
 
     m_authorName.setString("Maximilian Wagenbach");
     m_authorName.setFont(m_font);
     m_authorName.setCharacterSize(40);
-    m_authorName.setColor(sf::Color(54, 54, 54));
+    m_authorName.setFillColor(sf::Color(54, 54, 54));
     m_authorName.setPosition(m_targetSize.x - m_authorName.getLocalBounds().width - 10, m_targetSize.y - m_authorName.getLocalBounds().height - 10);
 
     // Set up some controls
@@ -113,7 +114,7 @@ void CrazyPainter::render(sf::RenderTarget& target)
     m_frontTarget->clear(sf::Color::Transparent);
     if(m_isFading)
     {
-        m_fadeShader.setParameter("fRate", m_frameTime.asSeconds() * m_fadeSpeed);
+        m_fadeShader.setUniform("fRate", m_frameTime.asSeconds() * m_fadeSpeed);
         m_frontTarget->draw(sf::Sprite(m_backTarget->getTexture()), &m_fadeShader);
     }
     else

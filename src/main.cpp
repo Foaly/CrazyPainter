@@ -22,9 +22,9 @@ int main()
 
     // in release build redirect the errors to a log, so we can view them later
     std::ofstream log (filenameCharBuffer);
-    sf::err().rdbuf(log.rdbuf()); // redirect sf::err to the log
-    std::cerr.rdbuf(log.rdbuf()); // redirect std::cerr to the log
-    std::cout.rdbuf(log.rdbuf()); // redirect std::cout to the log
+    //sf::err().rdbuf(log.rdbuf()); // redirect sf::err to the log
+    //std::cerr.rdbuf(log.rdbuf()); // redirect std::cerr to the log
+    //std::cout.rdbuf(log.rdbuf()); // redirect std::cout to the log
 #endif
 
 	// log the start time

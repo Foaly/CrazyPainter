@@ -24,7 +24,6 @@ set(SOURCE_FILES src/CircleInterpolation.cpp
                  src/ColorGenerator.hpp
                  src/CrazyPainter.cpp
                  src/CrazyPainter.hpp
-                 src/FadeShader.frag
                  src/HermiteInterpolation.cpp
                  src/HermiteInterpolation.hpp
                  src/InterpolationMode.hpp
@@ -38,13 +37,14 @@ set(SOURCE_FILES src/CircleInterpolation.cpp
                  src/SmoothstepInterpolation.cpp
                  src/SmoothstepInterpolation.hpp
                  src/Utilities.hpp
+                 src/PathResolver.hpp
                  )
 
 # when we are on MacOS create a bundle and
 # put the rescources in it
 if(APPLE)
-    #set(SOURCE_FILES ${SOURCE_FILES}
-    #                 src/osx/PathResolver.mm)
+    set(SOURCE_FILES ${SOURCE_FILES}
+                     src/osx/PathResolver.mm)
 
     add_executable(${EXECUTABLE_NAME} MACOSX_BUNDLE ${SOURCE_FILES})
 
