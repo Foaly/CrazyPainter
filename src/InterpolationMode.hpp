@@ -21,8 +21,9 @@ namespace Interpolation
         Smoothstep,
         Jitter,
         Circle,
+        Star,
 
-        InterpolationModeCount = 4
+        InterpolationModeCount = 5
     };
 }
 

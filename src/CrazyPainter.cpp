@@ -7,6 +7,7 @@
 #include "SmoothstepInterpolation.hpp"
 #include "JitterMode.hpp"
 #include "CircleInterpolation.hpp"
+#include "StarInterpolation.hpp"
 
 
 CrazyPainter::CrazyPainter(sf::RenderWindow& window)
@@ -66,10 +67,11 @@ CrazyPainter::CrazyPainter(sf::RenderWindow& window)
     }
 
     // create an array of interpolation modes, so we can choose between them later
-    m_interpolationModes[Interpolation::Hermite] = std::unique_ptr<InterpolationMode>(new HermiteInterpolation(m_targetSize));
+    m_interpolationModes[Interpolation::Hermite]    = std::unique_ptr<InterpolationMode>(new HermiteInterpolation(m_targetSize));
     m_interpolationModes[Interpolation::Smoothstep] = std::unique_ptr<InterpolationMode>(new SmoothstepInterpolation(m_targetSize));
-    m_interpolationModes[Interpolation::Jitter] = std::unique_ptr<InterpolationMode>(new JitterMode(m_targetSize));
-    m_interpolationModes[Interpolation::Circle] = std::unique_ptr<InterpolationMode>(new CircleInterpolation(m_targetSize));
+    m_interpolationModes[Interpolation::Jitter]     = std::unique_ptr<InterpolationMode>(new JitterMode(m_targetSize));
+    m_interpolationModes[Interpolation::Circle]     = std::unique_ptr<InterpolationMode>(new CircleInterpolation(m_targetSize));
+    m_interpolationModes[Interpolation::Star]       = std::unique_ptr<InterpolationMode>(new StarInterpolation(m_targetSize));
 }
 
 void CrazyPainter::update(sf::Time frameTime)
@@ -200,6 +202,10 @@ void CrazyPainter::handleEvents(sf::Event& event, sf::Window& window)
             m_currentInterpolationType = Interpolation::Circle;
             m_interpolationModes[m_currentInterpolationType]->reset(m_lastPosition);
             break;
+        case sf::Keyboard::Num5:
+            m_currentInterpolationType = Interpolation::Star;
+            m_interpolationModes[m_currentInterpolationType]->reset(m_lastPosition);
+            break;
         default:
             break;
         }
@@ -238,7 +244,7 @@ void CrazyPainter::changeInterpolationMode(int step)
                 m_fadeSpeed = 0.12; // fast fading
         }
 
-    m_interpolationModes[m_currentInterpolationType]->reset(m_lastPosition);
+        m_interpolationModes[m_currentInterpolationType]->reset(m_lastPosition);
 
     }
 }

@@ -38,6 +38,8 @@ set(SOURCE_FILES src/CircleInterpolation.cpp
                  src/SmoothstepInterpolation.hpp
                  src/Utilities.hpp
                  src/PathResolver.hpp
+                 src/StarInterpolation.hpp
+                 src/StarInterpolation.cpp
                  )
 
 # when we are on MacOS create a bundle and
