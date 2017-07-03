@@ -14,31 +14,12 @@
 /// You should have received a copy of the GNU General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "../PathResolver.hpp"
-#import <Foundation/Foundation.h>
+#include "PathResolver.hpp"
 
-// On OSX find the path the bundle resources
-// and append the original path to it
+// On Linux and Windows simply return an emtpy path
 
 std::string resolvePath(std::string originalPath)
 {
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-
-    std::string result;
-    NSBundle* bundle = [NSBundle mainBundle];
-
-    if (bundle == nil) {
-#ifdef DEBUG
-        NSLog(@"bundle is nil. Path to bundle resources can not be found. Returning input string.");
-#endif
-    } else {
-        NSString* originalPathNS = [NSString stringWithUTF8String:originalPath.c_str()];
-        NSString* bundleResourcePath = [bundle resourcePath];
-        result = [bundleResourcePath UTF8String] + std::string("/") + [originalPathNS UTF8String];
-    }
-
-    [pool drain];
-
-    return result;
+    return originalPath;
 }
 

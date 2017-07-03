@@ -55,9 +55,9 @@ if(APPLE)
     copy_resource_folder_to_bundle(${EXECUTABLE_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/logs logs)
   	set_target_properties(${EXECUTABLE_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/src/osx/Info.plist.in)
 else()
-    # on windows there are no bundles
-    #set(SOURCE_FILES ${SOURCE_FILES}
-    #                 src/PathResolver.cpp)
+    # on linux/windows there are no bundles
+    set(SOURCE_FILES ${SOURCE_FILES}
+                     src/PathResolver.cpp)
 
     add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
 endif()
