@@ -50,10 +50,8 @@ if(APPLE)
 
     add_executable(${EXECUTABLE_NAME} MACOSX_BUNDLE ${SOURCE_FILES})
 
-    # copy resource files into bundle
-    copy_resource_folder_to_bundle(${EXECUTABLE_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/data data)
-    copy_resource_folder_to_bundle(${EXECUTABLE_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/logs logs)
-  	set_target_properties(${EXECUTABLE_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/src/osx/Info.plist.in)
+    # add .plist file
+    set_target_properties(${EXECUTABLE_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/src/osx/Info.plist.in)
 else()
     # on linux/windows there are no bundles
     set(SOURCE_FILES ${SOURCE_FILES}
@@ -62,10 +60,13 @@ else()
     add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
 endif()
 
+# copy resource files
+copy_resource_folder_next_to_target(${EXECUTABLE_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/data data)
+copy_resource_folder_next_to_target(${EXECUTABLE_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/logs logs)
+
 
 # Add our CMake scripts
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-
 
 # Detect and add any version 2.X of SFML
 # See the FindSFML.cmake file for additional details and instructions
