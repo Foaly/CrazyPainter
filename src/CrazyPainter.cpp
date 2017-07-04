@@ -9,6 +9,7 @@
 #include "CircleInterpolation.hpp"
 #include "StarInterpolation.hpp"
 #include "DeflectInterpolation.hpp"
+#include "SpiralInterpolation.hpp"
 
 
 CrazyPainter::CrazyPainter(sf::RenderWindow& window) :
@@ -72,6 +73,7 @@ CrazyPainter::CrazyPainter(sf::RenderWindow& window) :
     m_interpolationModes[Interpolation::Circle]     = std::unique_ptr<InterpolationMode>(new CircleInterpolation(m_targetSize));
     m_interpolationModes[Interpolation::Star]       = std::unique_ptr<InterpolationMode>(new StarInterpolation(m_targetSize));
     m_interpolationModes[Interpolation::Deflect]    = std::unique_ptr<InterpolationMode>(new DeflectInterpolation(m_targetSize));
+    m_interpolationModes[Interpolation::Spiral]     = std::unique_ptr<InterpolationMode>(new SpiralInterpolation(m_targetSize));
 }
 
 void CrazyPainter::update(sf::Time frameTime)
@@ -208,6 +210,10 @@ void CrazyPainter::handleEvents(sf::Event& event, sf::Window& window)
             break;
         case sf::Keyboard::Num6:
             m_currentInterpolationType = Interpolation::Deflect;
+            m_interpolationModes[m_currentInterpolationType]->reset(m_lastPosition);
+            break;
+        case sf::Keyboard::Num7:
+            m_currentInterpolationType = Interpolation::Spiral;
             m_interpolationModes[m_currentInterpolationType]->reset(m_lastPosition);
             break;
         default:

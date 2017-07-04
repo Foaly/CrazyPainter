@@ -23,8 +23,9 @@ namespace Interpolation
         Circle,
         Star,
         Deflect,
+        Spiral,
 
-        InterpolationModeCount = 6
+        InterpolationModeCount = 7
     };
 }
 

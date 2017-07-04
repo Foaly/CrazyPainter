@@ -42,6 +42,8 @@ set(SOURCE_FILES src/CircleInterpolation.cpp
                  src/StarInterpolation.cpp
                  src/DeflectInterpolation.hpp
                  src/DeflectInterpolation.cpp
+                 src/SpiralInterpolation.hpp
+                 src/SpiralInterpolation.cpp
                  )
 
 # when we are on MacOS create a bundle and
