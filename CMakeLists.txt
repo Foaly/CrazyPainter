@@ -40,6 +40,8 @@ set(SOURCE_FILES src/CircleInterpolation.cpp
                  src/PathResolver.hpp
                  src/StarInterpolation.hpp
                  src/StarInterpolation.cpp
+                 src/DeflectInterpolation.hpp
+                 src/DeflectInterpolation.cpp
                  )
 
 # when we are on MacOS create a bundle and

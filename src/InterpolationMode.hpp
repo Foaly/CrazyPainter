@@ -22,8 +22,9 @@ namespace Interpolation
         Jitter,
         Circle,
         Star,
+        Deflect,
 
-        InterpolationModeCount = 5
+        InterpolationModeCount = 6
     };
 }
 
