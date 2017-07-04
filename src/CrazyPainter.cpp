@@ -11,13 +11,11 @@
 #include "DeflectInterpolation.hpp"
 
 
-CrazyPainter::CrazyPainter(sf::RenderWindow& window)
+CrazyPainter::CrazyPainter(sf::RenderWindow& window) :
+    m_window(window)    // save a reference to the window, for mouse input
 {
-    // save a reference to the window, to get mouse input
-    m_window = &window;
-
     // Get the Targets size
-    m_targetSize = sf::Vector2f(m_window->getSize());
+    m_targetSize = sf::Vector2f(m_window.getSize());
 
     // Create Rendertextures
     m_renderTargets[0].create(m_targetSize.x, m_targetSize.y);
@@ -61,10 +59,10 @@ CrazyPainter::CrazyPainter(sf::RenderWindow& window)
 
     // Initialize the lines
     resetLines();
-    for(int i = 0; i < 16; i++)
+    for (auto &line: m_lines)
     {
-        m_lines[i].setWidth(5);
-        m_lines[i].setFillColor(sf::Color::Red);
+        line.setWidth(5);
+        line.setFillColor(sf::Color::Red);
     }
 
     // create an array of interpolation modes, so we can choose between them later
@@ -109,14 +107,14 @@ void CrazyPainter::update(sf::Time frameTime)
     else if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         // get the mouse position (pixel are mapped to world coordinates, to take resizing the window into account)
-        sf::Vector2f mousePosition = m_window->mapPixelToCoords(sf::Mouse::getPosition(*m_window));
+        sf::Vector2f mousePosition = m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window));
 
         calculateLines(mousePosition);
     }
 
 }
 
-void CrazyPainter::render(sf::RenderTarget& target)
+void CrazyPainter::render()
 {
     // Draw everything to the RenderTexture
     m_frontTarget->clear(sf::Color::Transparent);
@@ -128,9 +126,9 @@ void CrazyPainter::render(sf::RenderTarget& target)
     else
         m_frontTarget->draw(sf::Sprite(m_backTarget->getTexture()));
 
-    for(int i = 0; i < 16; i++)
+    for (auto &line: m_lines)
     {
-        m_frontTarget->draw(m_lines[i]);
+        m_frontTarget->draw(line);
     }
     m_frontTarget->display();
     std::swap(m_frontTarget, m_backTarget);
@@ -139,9 +137,9 @@ void CrazyPainter::render(sf::RenderTarget& target)
 
     // Draw to the window
     m_renderSprite.setTexture(m_backTarget->getTexture());
-    target.draw(m_renderSprite);
+    m_window.draw(m_renderSprite);
     if(m_showWatermark)
-        target.draw(m_authorName);
+        m_window.draw(m_authorName);
 }
 
 void CrazyPainter::handleEvents(sf::Event& event, sf::Window& window)
@@ -257,10 +255,10 @@ void CrazyPainter::changeInterpolationMode(int step)
 
 void CrazyPainter::resetLines()
 {
-    for(int i = 0; i < 16; i++)
+    for (auto &line: m_lines)
     {
-        m_lines[i].setStartPoint(m_halfTargetSize);
-        m_lines[i].setEndPoint(m_halfTargetSize);
+        line.setStartPoint(m_halfTargetSize);
+        line.setEndPoint(m_halfTargetSize);
     }
 
     m_lastPosition = m_halfTargetSize;

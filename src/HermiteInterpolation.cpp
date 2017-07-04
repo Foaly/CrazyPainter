@@ -27,7 +27,7 @@ sf::Vector2f HermiteInterpolation::nextStep(sf::Time elapsedTime)
         m_startTangent = m_endTangent;
         m_endPosition = m_nextPosition;
         m_nextPosition = sf::Vector2f(random(0.f, m_targetSize.x), random(0.f, m_targetSize.y));
-        m_endTangent = sf::Vector2f(m_nextPosition - m_startPosition);
+        m_endTangent = m_nextPosition - m_startPosition;
 
         m_currentTimeClock.restart();
     }
@@ -37,6 +37,8 @@ sf::Vector2f HermiteInterpolation::nextStep(sf::Time elapsedTime)
 void HermiteInterpolation::reset(sf::Vector2f lastPosition)
 {
     m_startPosition = lastPosition;
+    m_startTangent = sf::Vector2f(0.f, 0.f);
+    m_endTangent = m_nextPosition - m_startPosition;
 
     m_currentTimeClock.restart();
 }

@@ -22,7 +22,7 @@ public:
     CrazyPainter(sf::RenderWindow& window);
 
     void update(sf::Time frameTime);
-    void render(sf::RenderTarget& target);
+    void render();
     void handleEvents(sf::Event& event, sf::Window& window);
 
 private:
@@ -31,7 +31,7 @@ private:
     void changeInterpolationMode(int step);
 
     sf::Vector2f m_targetSize;
-    sf::RenderWindow* m_window;
+    sf::RenderWindow& m_window;
     std::array<sf::RenderTexture, 2> m_renderTargets;
     sf::RenderTexture* m_frontTarget;
     sf::RenderTexture* m_backTarget;

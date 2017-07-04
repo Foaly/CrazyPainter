@@ -41,6 +41,8 @@ int main()
 	// log the start time
     std::cout << "Programm started at: " << std::ctime(&startTime_t) << std::endl;
 
+    sf::VideoMode videoMode = sf::VideoMode::getFullscreenModes()[0];
+
     // Log some info
     {
         sf::Context context;
@@ -49,16 +51,19 @@ int main()
         std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
     }
     std::cout << "Compiled with SFML Version: " << SFML_VERSION_MAJOR  << "." << SFML_VERSION_MINOR << std::endl;
-    std::cout << "VideoMode:" << std::endl << "  Width: " << sf::VideoMode::getFullscreenModes()[0].width  << std::endl <<  "  Height: " << sf::VideoMode::getFullscreenModes()[0].height  << std::endl <<  "  Bits per Pixel: " << sf::VideoMode::getFullscreenModes()[0].bitsPerPixel << std::endl;
+    std::cout << "VideoMode:" << std::endl
+              << "  Width: " << videoMode.width  << std::endl
+              << "  Height: " << videoMode.height  << std::endl
+              << "  Bits per Pixel: " << videoMode.bitsPerPixel << std::endl;
     std::cout << "Maximum Textursize: " << sf::Texture::getMaximumSize() << std::endl;
 
     // Set up the window
     sf::ContextSettings contextSettings;
     contextSettings.antialiasingLevel = 16;
 #ifdef DEBUG
-    sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Crazy Painter", sf::Style::Default, contextSettings);
+    sf::RenderWindow window(videoMode, "Crazy Painter", sf::Style::Default, contextSettings);
 #else
-    sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "Crazy Painter", sf::Style::Fullscreen, contextSettings);
+    sf::RenderWindow window(videoMode, "Crazy Painter", sf::Style::Fullscreen, contextSettings);
 #endif
     window.setFramerateLimit(60);
 
@@ -111,7 +116,7 @@ int main()
 
         // Draw to the window
         window.clear();
-        crazyPainter.render(window);
+        crazyPainter.render();
         window.display();
     }
 
@@ -119,7 +124,9 @@ int main()
     std::chrono::system_clock::time_point endOfProgramTimePoint = std::chrono::system_clock::now();
 
     std::chrono::duration<double> runTimeInSeconds = std::chrono::duration_cast<std::chrono::duration<double>>(endOfProgramTimePoint - startOfProgramTimePoint);
-    std::cout << std::endl << "The program has been running for: " << static_cast<long>(std::floor(runTimeInSeconds.count())) / 60 << " minutes and " << std::fmod(runTimeInSeconds.count(), 60) << " seconds." << std::endl;
+    std::cout << std::endl
+              << "The program has been running for: " << static_cast<long>(std::floor(runTimeInSeconds.count())) / 60
+              << " minutes and " << std::fmod(runTimeInSeconds.count(), 60) << " seconds." << std::endl;
 
 
 #ifndef DEBUG
