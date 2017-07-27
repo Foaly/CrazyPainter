@@ -26,7 +26,7 @@ int main()
     // in release build redirect the errors to a log, so we can view them later
     std::ofstream log (logFileName);
     //save old buffer
-    auto cinbuf = std::cin.rdbuf();
+    auto cerrbuf = std::cerr.rdbuf();
     auto coutbuf = std::cout.rdbuf();
     if (log.is_open())
     {
@@ -131,7 +131,7 @@ int main()
 
 #ifndef DEBUG
     // reset to standard input/output again
-    std::cin.rdbuf(cinbuf);
+    std::cin.rdbuf(cerrbuf);
     std::cout.rdbuf(coutbuf);
 #endif
 

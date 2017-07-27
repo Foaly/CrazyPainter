@@ -72,7 +72,11 @@ copy_resource_folder_next_to_target(${EXECUTABLE_NAME} ${CMAKE_CURRENT_SOURCE_DI
 # Add our CMake scripts
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
-# Detect and add any version 2.X of SFML
+if(WIN32)
+    set(SFML_ROOT "F:/Librarys/official_SFML/install")
+endif()
+
+    # Detect and add any version 2.X of SFML
 # See the FindSFML.cmake file for additional details and instructions
 find_package(SFML 2 COMPONENTS system window graphics network audio REQUIRED)
 if(SFML_FOUND)
