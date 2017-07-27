@@ -5,3 +5,6 @@ obj/*
 *.exe
 *.dll
 *.out
+
+# Ignore CLion files
+.idea/*
